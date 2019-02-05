@@ -8,7 +8,6 @@ import SignIn from './component/SignIn/SignIn';
 import Particles from 'react-particles-js';
 import Register from './component/Register/Register';
 import './App.css';
-import Clarifai from 'clarifai';
 
 const particleOptions ={
   particles: {
@@ -21,10 +20,6 @@ const particleOptions ={
     }
   }
 }
-
-const app = new Clarifai.App({
- apiKey: '64dda3e7800840898a81ed5ce4d178fb'
-});
 
 const initialState = {
   input: '',
@@ -79,10 +74,17 @@ class App extends Component {
 
   onButtonSubmit = () => {
     this.setState({imageUrl: this.state.input})
-    app.models.predict(Clarifai.FACE_DETECT_MODEL, this.state.input)
+    fetch('https://obscure-woodland-21761.herokuapp.com/imageurl', {
+          method: 'post',
+          headers: {'Content-Type' : 'application/json'},
+          body: JSON.stringify({
+            input: this.state.input
+          })
+        })
+      .then(response => response.json())
     .then(response => {
       if(response){
-        fetch('http://localhost:3001/image', {
+        fetch('https://obscure-woodland-21761.herokuapp.com/image', {
           method: 'put',
           headers: {'Content-Type' : 'application/json'},
           body: JSON.stringify({
