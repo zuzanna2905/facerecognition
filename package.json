@@ -2,6 +2,10 @@
   "name": "facerecongnition",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": "8.11.1",
+    "npm": "4.6.1"
+  },
   "dependencies": {
     "react": "^16.7.0",
     "react-dom": "^16.7.0",
