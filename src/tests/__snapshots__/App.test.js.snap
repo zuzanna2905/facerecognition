@@ -1,0 +1,35 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders App without crashing 1`] = `
+<div
+  className="App"
+>
+  <t
+    className="particles"
+    height="100%"
+    params={
+      Object {
+        "particles": Object {
+          "number": Object {
+            "density": Object {
+              "enable": true,
+              "value_area": 800,
+            },
+            "value": 100,
+          },
+        },
+      }
+    }
+    style={Object {}}
+    width="100%"
+  />
+  <Navigation
+    isSignedIn={false}
+    onRouteChange={[Function]}
+  />
+  <SignIn
+    loadUser={[Function]}
+    onRouteChange={[Function]}
+  />
+</div>
+`;

@@ -35,6 +35,7 @@ const initialState = {
     joined: ''
   }
 }
+
 class App extends Component {
   constructor(){
     super();
@@ -42,26 +43,31 @@ class App extends Component {
   }
 
   loadUser = (data) => {
-    this.setState({user : {
-      id: data.id,
-      name: data.name,
-      email: data.email,
-      entries: data.entries,
-      joined: data.joined
-    }})
+    if(data[0]){
+      this.setState({user : {
+        id: data.id,
+        name: data.name,
+        email: data.email,
+        entries: data.entries,
+        joined: data.joined
+      }})
+    }
   }
 
   calculateFaceLocation = (data) => {
-    const clarifaiFace = data.outputs[0].data.regions[0].region_info.bounding_box
-    const image = document.getElementById('inputImage');
-    const width = Number(image.width);
-    const height = Number(image.height);
-    return {
-      leftCol: clarifaiFace.left_col * width,
-      topRow: clarifaiFace.top_row * height,
-      rightCol: width - (clarifaiFace.right_col * width),
-      bottomRow: height - (clarifaiFace.bottom_row * height)
+    if(data[0]){
+      const clarifaiFace = data.outputs[0].data.regions[0].region_info.bounding_box;
+      const image = document.getElementById('inputImage');
+      const width = Number(image.width);
+      const height = Number(image.height);
+      return {
+        leftCol: clarifaiFace.left_col * width,
+        topRow: clarifaiFace.top_row * height,
+        rightCol: width - (clarifaiFace.right_col * width),
+        bottomRow: height - (clarifaiFace.bottom_row * height)
+      }
     }
+    return {}
   }
 
   displayFaceBox = (box) => {
@@ -75,40 +81,42 @@ class App extends Component {
   onButtonSubmit = () => {
     this.setState({imageUrl: this.state.input})
     fetch('https://obscure-woodland-21761.herokuapp.com/imageurl', {
-          method: 'post',
-          headers: {'Content-Type' : 'application/json'},
-          body: JSON.stringify({
-            input: this.state.input
-          })
-        })
-      .then(response => response.json())
+      method: 'post',
+      headers: {'Content-Type' : 'application/json'},
+      body: JSON.stringify({
+        input: this.state.input
+      })
+    })
+    .then(response => response.json())
     .then(response => {
       if(response){
-        fetch('https://obscure-woodland-21761.herokuapp.com/image', {
-          method: 'put',
-          headers: {'Content-Type' : 'application/json'},
-          body: JSON.stringify({
-            id: this.state.user.id
-          })
-        })
-        .then(response => response.json())
-        .then(count => {
-          this.setState(Object.assign(this.state.user, {entries: count}))
-        })
-
-      }
+        this.countActualization();
         this.displayFaceBox(this.calculateFaceLocation(response))
+      }
     })
     .catch(err => console.log(err));
+  }
+
+  countActualization = () => {
+    fetch('https://obscure-woodland-21761.herokuapp.com/image', {
+      method: 'put',
+      headers: {'Content-Type' : 'application/json'},
+      body: JSON.stringify({
+        id: this.state.user.id
+      })
+    })
+    .then(response => response.json())
+    .then(count => {
+      this.setState(Object.assign(this.state.user, {entries: count}))
+    })
   }
 
   onRouteChange = (route) => {
     if( route === 'signout'){
       this.setState(initialState)
     } else if (route === 'home') {
-      this.setState({isSignedIn: true})
+      this.setState({ isSignedIn: true, route: route});
     }
-    this.setState({ route: route});
   }
 
   render() {
