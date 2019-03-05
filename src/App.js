@@ -43,19 +43,17 @@ class App extends Component {
   }
 
   loadUser = (data) => {
-    if(data[0]){
-      this.setState({user : {
-        id: data.id,
-        name: data.name,
-        email: data.email,
-        entries: data.entries,
-        joined: data.joined
-      }})
-    }
+    this.setState({user : {
+      id: data.id,
+      name: data.name,
+      email: data.email,
+      entries: data.entries,
+      joined: data.joined
+    }})
   }
 
   calculateFaceLocation = (data) => {
-    if(data[0]){
+    if(data){
       const clarifaiFace = data.outputs[0].data.regions[0].region_info.bounding_box;
       const image = document.getElementById('inputImage');
       const width = Number(image.width);
