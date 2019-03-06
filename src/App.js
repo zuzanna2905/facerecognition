@@ -31,7 +31,7 @@ const initialState = {
     id: '',
     name: '',
     email: '',
-    entries: '',
+    entries: 0,
     joined: ''
   }
 }
@@ -107,6 +107,7 @@ class App extends Component {
     .then(count => {
       this.setState(Object.assign(this.state.user, {entries: count}))
     })
+    .catch(err => console.log(err));
   }
 
   onRouteChange = (route) => {

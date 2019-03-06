@@ -82,6 +82,7 @@ class Register extends React.Component {
                 </fieldset>
                 <div className="">
                     <input 
+                    id = 'registersubmit'
                     onClick={this.onSubmitRegister}
                     className="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib" 
                     type="submit" 

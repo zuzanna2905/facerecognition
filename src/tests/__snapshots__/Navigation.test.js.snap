@@ -1,0 +1,43 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders Navigation without crashing 1`] = `
+<nav
+  style={
+    Object {
+      "display": "flex",
+      "justifyContent": "flex-end",
+    }
+  }
+>
+  <p
+    className="f3 link dim black underline pa3 pointer"
+    onClick={[Function]}
+  >
+    Sing In
+  </p>
+  <p
+    className="f3 link dim black underline pa3 pointer"
+    onClick={[Function]}
+  >
+    Register
+  </p>
+</nav>
+`;
+
+exports[`route to signout 1`] = `
+<nav
+  style={
+    Object {
+      "display": "flex",
+      "justifyContent": "flex-end",
+    }
+  }
+>
+  <p
+    className="f3 link dim black underline pa3 pointer"
+    onClick={[Function]}
+  >
+    Sing Out
+  </p>
+</nav>
+`;

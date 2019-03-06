@@ -1,0 +1,30 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders FaceRecognition without crashing 1`] = `
+<div
+  className="center ma"
+>
+  <div
+    className="absolute mt2"
+  >
+    <img
+      alt=""
+      height="auto"
+      id="inputImage"
+      src=""
+      width="500px"
+    />
+    <div
+      className="bounding-box"
+      style={
+        Object {
+          "bottom": 0,
+          "left": 0,
+          "right": 0,
+          "top": 0,
+        }
+      }
+    />
+  </div>
+</div>
+`;

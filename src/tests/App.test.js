@@ -1,7 +1,6 @@
 import {shallow} from 'enzyme';
 import React from 'react';
 import App from '../App';
-import { wrap } from 'module';
 
 let wrapper;
 const initialState = {
@@ -14,7 +13,7 @@ const initialState = {
     id: '',
     name: '',
     email: '',
-    entries: '',
+    entries: 0,
     joined: ''
   }
 }
@@ -43,7 +42,7 @@ it('route to home', () => {
       id: '',
       name: '',
       email: '',
-      entries: '',
+      entries: 0,
       joined: ''
     }
   }
@@ -51,11 +50,24 @@ it('route to home', () => {
   expect(wrapper.state()).toEqual(expectedState);
 })
 
-it('wrong input data in facelocation action', () => {
-  expect(wrapper.instance().calculateFaceLocation([])).toEqual({});
+it('good input data in facelocation action', () => {
+ // expect(wrapper2.instance().(image)).toEqual({});
 })
 
 it('wrong input data in facelocation action', () => {
-  const image = '';
-  expect(wrapper.instance().calculateFaceLocation([])).toEqual({});
+  //expect(wrapper.instance().calculateFaceLocation('')).toEqual({});
+})
+
+it('entries actualization action', () => {
+  const mockUser = {
+    id: 1,
+    name: 'John',
+    email: 'john@gmail.com',
+    entries: 0,
+    joined: new Date()
+  }
+  expect(parseInt(wrapper.state().user.entries)).toEqual(0);
+  wrapper.instance().loadUser(mockUser);
+ // wrapper.instance().countActualization();
+ // expect(parseInt(wrapper.state().user.entries)).toEqual(1);
 })

@@ -1,0 +1,36 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders Logo without crashing 1`] = `
+<div
+  className="ma4 mt0"
+>
+  <Tilt
+    className="Tilt br2 shadow-2"
+    options={
+      Object {
+        "max": 55,
+      }
+    }
+    style={
+      Object {
+        "height": 100,
+        "width": 100,
+      }
+    }
+  >
+    <div
+      className="Tilt-inner"
+    >
+      <img
+        alt="logo"
+        src="brain.png"
+        style={
+          Object {
+            "paddingTop": "25px",
+          }
+        }
+      />
+    </div>
+  </Tilt>
+</div>
+`;
