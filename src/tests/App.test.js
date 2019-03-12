@@ -68,6 +68,4 @@ it('entries actualization action', () => {
   }
   expect(parseInt(wrapper.state().user.entries)).toEqual(0);
   wrapper.instance().loadUser(mockUser);
- // wrapper.instance().countActualization();
- // expect(parseInt(wrapper.state().user.entries)).toEqual(1);
 })

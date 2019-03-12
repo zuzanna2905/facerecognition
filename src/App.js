@@ -24,7 +24,7 @@ const particleOptions ={
 const initialState = {
   input: '',
   imageUrl: '',
-  box: {},
+  boxes: [],
   route: 'signin',
   isSignedIn: false,
   user: {
@@ -54,22 +54,26 @@ class App extends Component {
 
   calculateFaceLocation = (data) => {
     if(data){
-      const clarifaiFace = data.outputs[0].data.regions[0].region_info.bounding_box;
+      const clarifaiFaces = data.outputs[0].data.regions.map(region => {
+        return region.region_info.bounding_box;
+      })
       const image = document.getElementById('inputImage');
       const width = Number(image.width);
       const height = Number(image.height);
-      return {
-        leftCol: clarifaiFace.left_col * width,
-        topRow: clarifaiFace.top_row * height,
-        rightCol: width - (clarifaiFace.right_col * width),
-        bottomRow: height - (clarifaiFace.bottom_row * height)
-      }
+      const faces = clarifaiFaces.map(face => 
+        { return {
+        leftCol: face.left_col * width,
+        topRow: face.top_row * height,
+        rightCol: width - (face.right_col * width),
+        bottomRow: height - (face.bottom_row * height)
+      }})
+      return faces;
     }
     return {}
   }
 
-  displayFaceBox = (box) => {
-    this.setState({box: box});
+  displayFaceBoxes = (boxes) => {
+    this.setState({boxes: boxes});
   }
   
   onInputChange = (event) => {
@@ -78,7 +82,7 @@ class App extends Component {
 
   onButtonSubmit = () => {
     this.setState({imageUrl: this.state.input})
-    fetch('https://obscure-woodland-21761.herokuapp.com/imageurl', {
+    fetch('http://localhost:3000/imageurl', {
       method: 'post',
       headers: {'Content-Type' : 'application/json'},
       body: JSON.stringify({
@@ -89,14 +93,14 @@ class App extends Component {
     .then(response => {
       if(response){
         this.countActualization();
-        this.displayFaceBox(this.calculateFaceLocation(response))
+        this.displayFaceBoxes(this.calculateFaceLocation(response))
       }
     })
     .catch(err => console.log(err));
   }
 
   countActualization = () => {
-    fetch('https://obscure-woodland-21761.herokuapp.com/image', {
+    fetch('http://localhost:3000/image', {
       method: 'put',
       headers: {'Content-Type' : 'application/json'},
       body: JSON.stringify({
@@ -121,7 +125,7 @@ class App extends Component {
   }
 
   render() {
-    const {isSignedIn, route, box, imageUrl} = this.state;
+    const {isSignedIn, route, boxes, imageUrl} = this.state;
     return (
       <div className="App">
         <Particles className="particles"
@@ -132,7 +136,7 @@ class App extends Component {
           <Logo />
           <Rank name={this.state.user.name} entries={this.state.user.entries}/>
           <ImageLinkForm onInputChange={this.onInputChange} onButtonSubmit={this.onButtonSubmit}/>
-          <FaceRecognition box={box} imageUrl={imageUrl}/>
+          <FaceRecognition boxes={boxes} imageUrl={imageUrl}/>
         </div>
         : (
           route === 'signin' ?       
