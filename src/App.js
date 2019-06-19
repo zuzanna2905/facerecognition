@@ -7,6 +7,8 @@ import FaceRecognition from './component/FaceRecognition/FaceRecognition';
 import SignIn from './component/SignIn/SignIn';
 import Particles from 'react-particles-js';
 import Register from './component/Register/Register';
+import Modal from './component/Modal/Modal';
+import Profile from './component/Profile/Profile'
 import './App.css';
 
 const particleOptions ={
@@ -27,6 +29,7 @@ const initialState = {
   boxes: [],
   route: 'signin',
   isSignedIn: false,
+  isProfileOpen: false,
   user: {
     id: '',
     name: '',
@@ -124,13 +127,23 @@ class App extends Component {
     }
   }
 
+  toggleModal = () => {
+    this.setState(prevState => ({
+      isProfileOpen: !prevState.isProfileOpen
+    }))
+  }
+
   render() {
-    const {isSignedIn, route, boxes, imageUrl} = this.state;
+    const {isSignedIn, route, boxes, imageUrl, isProfileOpen} = this.state;
     return (
       <div className="App">
         <Particles className="particles"
           params={particleOptions}/>
-        <Navigation isSignedIn={isSignedIn} onRouteChange = {this.onRouteChange}/>  
+        <Navigation isSignedIn={isSignedIn} onRouteChange = {this.onRouteChange} toggleModal={this.toggleModal}/>  
+        {isProfileOpen ? 
+          <Modal >
+            <Profile isProfileOpen={isProfileOpen} toggleModal={this.toggleModal}/>
+          </Modal> : null }
         { route === 'home' ? 
         <div> 
           <Logo />

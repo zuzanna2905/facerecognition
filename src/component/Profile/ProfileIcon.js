@@ -32,7 +32,7 @@ class ProfileIcon extends Component {
                         <img src="http://tachyons.io/img/logo.jpg" className="dib w3 h3 br-100" alt="Site Name"/>
                     </DropdownToggle>
                     <DropdownMenu right className='b--transparent shadow-5'>
-                        <DropdownItem>View Profile</DropdownItem>
+                        <DropdownItem onClick={this.props.toggleModal}>View Profile</DropdownItem>
                         <DropdownItem onClick={()=>this.props.onRouteChange('signout')}>Sign out</DropdownItem>
                     </DropdownMenu>
                 </ButtonDropdown>
