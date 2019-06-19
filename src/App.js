@@ -35,6 +35,8 @@ const initialState = {
     name: '',
     email: '',
     entries: 0,
+    pet: '',
+    age: 0,
     joined: ''
   }
 }
@@ -51,7 +53,9 @@ class App extends Component {
       name: data.name,
       email: data.email,
       entries: data.entries,
-      joined: data.joined
+      joined: data.joined,
+      pet: data.pet,
+      age: data.age
     }})
   }
 
@@ -134,7 +138,7 @@ class App extends Component {
   }
 
   render() {
-    const {isSignedIn, route, boxes, imageUrl, isProfileOpen} = this.state;
+    const {isSignedIn, route, boxes, imageUrl, isProfileOpen, user} = this.state;
     return (
       <div className="App">
         <Particles className="particles"
@@ -142,7 +146,12 @@ class App extends Component {
         <Navigation isSignedIn={isSignedIn} onRouteChange = {this.onRouteChange} toggleModal={this.toggleModal}/>  
         {isProfileOpen ? 
           <Modal >
-            <Profile isProfileOpen={isProfileOpen} toggleModal={this.toggleModal}/>
+            <Profile 
+              isProfileOpen={isProfileOpen} 
+              toggleModal={this.toggleModal} 
+              loadUser = {this.loadUser}
+              user={user}
+            />
           </Modal> : null }
         { route === 'home' ? 
         <div> 
